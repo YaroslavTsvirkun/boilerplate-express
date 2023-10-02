@@ -33,6 +33,6 @@ bGround.setupBackgroundApp(app, myApp, __dirname).listen(port, () => {
 
 
 myApp.get("/", (req, res) => {
-  res.sendFile('./views/index.html')
+  res.sendFile(`${__dirname}/views/index.html`);
 });
 
