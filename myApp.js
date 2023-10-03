@@ -58,4 +58,27 @@ app.get("/name", (req, res) => {
     res.json(xjson);
   });
 
+app.get("/name", (req, res) => {
+    let data = getUserDataByRequest(req);
+    let xjson = convertUserDataToJson(data);
+    res.json(xjson);
+});
+
+app.post("/name", (req, res) => {
+    let data = getUserDataByRequest(req);
+    let xjson = convertUserDataToJson(data);
+    res.json(xjson);
+});
+
+function getUserDataByRequest(req) {
+    var firstName = req.query.first;
+    var lastName = req.query.last;
+    return [ firstName, lastName]
+}
+
+function convertUserDataToJson(data) {
+    let xjson = { "name": `${data[firstName]} ${data[lastName]}` }
+    return xjson
+}
+
 module.exports = app;
