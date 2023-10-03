@@ -7,28 +7,32 @@ process.env.MESSAGE_STYLE = "uppercase"
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/public", express.static(path.join(__dirname, 'public')));
 
-app.get(function middleware(req, res, next) {
-    var data = req.method + " " + req.path + " - " + req.ip;
-    console.log(data);
-});
+var loggerMidleware = (req, res, next) => {
+
+  let ClientIp = req.ip;
+  let path = req.path;
+  let method = req.method;
+
+  console.log(method + " " + path + " - " + ClientIp);
+  next();
+}
+app.use(loggerMidleware);
 
 app.get("/", (req, res) => {
   res.sendFile(`${__dirname}/views/index.html`);
 });
 
 app.get("/json", (req, res) => {
-    let xjson = { "message": "Hello json" };
+  let xjson = { "message": "Hello json" };
 
-    if (process.env.MESSAGE_STYLE === "uppercase") {
-        let message = xjson['message'].toUpperCase()
-        xjson['message'] = message;
-        res.json(xjson);
-    } else {
-        res.json(xjson);
-    }   
-  });
-
-
+  if (process.env.MESSAGE_STYLE === "uppercase") {
+    let message = xjson['message'].toUpperCase()
+    xjson['message'] = message;
+    res.json(xjson);
+  } else {
+    res.json(xjson);
+  }
+});
 
 
 
@@ -61,4 +65,8 @@ app.get("/json", (req, res) => {
 
 
 
- module.exports = app;
+
+
+
+
+module.exports = app;
