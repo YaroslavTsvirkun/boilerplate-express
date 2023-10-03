@@ -7,6 +7,11 @@ process.env.MESSAGE_STYLE = "uppercase"
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/public", express.static(path.join(__dirname, 'public')));
 
+app.get(function middleware(req, res, next) {
+    var data = req.method + " " + req.path + " - " + req.ip;
+    console.log(data);
+});
+
 app.get("/", (req, res) => {
   res.sendFile(`${__dirname}/views/index.html`);
 });
