@@ -129,6 +129,11 @@ app.get("/:word/echo", (req, res) => {
   });
 });
 
-
+app.get("/name", (req, res) => {
+    var firstName = req.query.first;
+    var lastName = req.query.last;
+    let xjson = { "name": `${firstName} ${lastName}` }
+    res.json(xjson);
+  });
 
 module.exports = app;
