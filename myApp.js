@@ -59,25 +59,31 @@ app.get("/name", (req, res) => {
   });
 
 app.get("/name", (req, res) => {
-    let data = getUserDataByRequest(req);
+    let data = getUserDataWithQueryByRequest(req);
     let xjson = convertUserDataToJson(data);
     res.json(xjson);
 });
 
 app.post("/name", (req, res) => {
-    let data = getUserDataByRequest(req);
+    let data = getUserDataWithBodyByRequest(req);
     let xjson = convertUserDataToJson(data);
     res.json(xjson);
 });
 
-function getUserDataByRequest(req) {
+function getUserDataWithQueryByRequest(req) {
     var firstName = req.query.first;
     var lastName = req.query.last;
-    return [ firstName, lastName]
+    return [ firstName, lastName ];
+}
+
+function getUserDataWithBodyByRequest(req) {
+    var firstName = req.body.first;
+    var lastName = req.body.last;
+    return [ firstName, lastName ];
 }
 
 function convertUserDataToJson(data) {
-    let xjson = { "name": `${data[firstName]} ${data[lastName]}` }
+    let xjson = { "name": `${data[0]} ${data[1]}` }
     return xjson
 }
 
